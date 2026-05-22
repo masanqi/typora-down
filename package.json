@@ -25,6 +25,7 @@
     "@milkdown/react": "^7.21.1",
     "@milkdown/theme-nord": "^7.21.1",
     "@tauri-apps/api": "^2.11.0",
+    "@tauri-apps/plugin-clipboard-manager": "^2.3.2",
     "@tauri-apps/plugin-dialog": "^2.7.1",
     "mermaid": "^11.15.0",
     "prismjs": "^1.30.0",

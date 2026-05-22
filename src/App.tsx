@@ -1,12 +1,12 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import Editor from './components/Editor';
-import Sidebar from './components/Sidebar';
-import Toolbar from './components/Toolbar';
-import StatusBar from './components/StatusBar';
-import { useFile } from './hooks/useFile';
-import { useTheme } from './hooks/useTheme';
-import { useEditor } from './hooks/useEditor';
-import { open } from '@tauri-apps/plugin-dialog';
+import { useState, useEffect, useCallback, useRef } from "react";
+import Editor from "./components/Editor";
+import Sidebar from "./components/Sidebar";
+import Toolbar from "./components/Toolbar";
+import StatusBar from "./components/StatusBar";
+import { useFile } from "./hooks/useFile";
+import { useTheme } from "./hooks/useTheme";
+import { useEditor } from "./hooks/useEditor";
+import { open } from "@tauri-apps/plugin-dialog";
 
 export default function App() {
   const file = useFile();
@@ -17,11 +17,11 @@ export default function App() {
 
   const handleOpenFile = useCallback(async () => {
     const path = await open({
-      filters: [{ name: 'Markdown', extensions: ['md', 'markdown'] }],
+      filters: [{ name: "Markdown", extensions: ["md", "markdown"] }],
     });
-    if (typeof path === 'string') {
+    if (typeof path === "string") {
       file.openFile(path);
-      const lastSlash = path.lastIndexOf('/');
+      const lastSlash = path.lastIndexOf("/");
       if (lastSlash > 0) {
         const dir = path.substring(0, lastSlash);
         file.openDir(dir);
@@ -31,17 +31,29 @@ export default function App() {
 
   const handleOpenFolder = useCallback(async () => {
     const dir = await open({ directory: true });
-    if (typeof dir === 'string') {
+    if (typeof dir === "string") {
       file.openDir(dir);
     }
   }, [file.openDir]);
 
   const handleThemeDirPick = useCallback(async () => {
     const dir = await open({ directory: true });
-    if (typeof dir === 'string') {
+    if (typeof dir === "string") {
       theme.setCustomThemeDir(dir);
     }
   }, [theme.setCustomThemeDir]);
+
+  const handleCopyAsMarkdown = useCallback(async () => {
+    if (!file.content) return;
+    try {
+      await navigator.clipboard.writeText(file.content);
+    } catch {
+      // Fallback for Tauri: use the writeText API
+      const { writeText } =
+        await import("@tauri-apps/plugin-clipboard-manager");
+      await writeText(file.content);
+    }
+  }, [file.content]);
 
   const handleHeadingClick = useCallback((id: string) => {
     // Query the editor container for heading elements with the matching data attribute
@@ -50,33 +62,33 @@ export default function App() {
 
     const headingEl = container.querySelector(`[data-heading-id="${id}"]`);
     if (headingEl) {
-      headingEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      headingEl.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, []);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 's') {
+      if ((e.metaKey || e.ctrlKey) && e.key === "s") {
         e.preventDefault();
         file.saveFile();
       }
-      if ((e.metaKey || e.ctrlKey) && e.key === 'o') {
+      if ((e.metaKey || e.ctrlKey) && e.key === "o") {
         e.preventDefault();
         handleOpenFile();
       }
-      if ((e.metaKey || e.ctrlKey) && e.key === '/') {
+      if ((e.metaKey || e.ctrlKey) && e.key === "/") {
         e.preventDefault();
         editor.toggleSourceMode();
       }
     };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
   }, [file.saveFile, handleOpenFile, editor.toggleSourceMode]);
 
   useEffect(() => {
     const title = file.currentFile
-      ? `${file.currentFile.split('/').pop()} - Typora-Down`
-      : 'Typora-Down';
+      ? `${file.currentFile.split("/").pop()} - Typora-Down`
+      : "Typora-Down";
     document.title = title;
   }, [file.currentFile]);
 
@@ -91,6 +103,7 @@ export default function App() {
         activeTheme={theme.activeTheme}
         onThemeChange={theme.switchTheme}
         onThemeDirPick={handleThemeDirPick}
+        onCopyAsMarkdown={handleCopyAsMarkdown}
       />
       <div className="app-body">
         {file.rootDir && (
