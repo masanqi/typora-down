@@ -5,7 +5,7 @@ import { Milkdown, MilkdownProvider, useEditor, useInstance } from '@milkdown/re
 import { Plugin, PluginKey } from '@milkdown/prose/state';
 import { Decoration, DecorationSet } from '@milkdown/prose/view';
 import type { Node as ProseNode } from '@milkdown/prose/model';
-import { editorPlugins, nord, listenerCtx } from './plugins';
+import { editorPlugins, configureNord, listenerCtx } from './plugins';
 import { saveImage } from '../../services/ipc';
 import type { HeadingItem } from '../Sidebar/Outline';
 
@@ -137,7 +137,7 @@ function MilkdownInner({ value, onChange, onHeadingsChange, currentFile }: Milkd
         .config((ctx) => {
           ctx.set(rootCtx, container);
           ctx.set(defaultValueCtx, value);
-          nord(ctx);
+          configureNord(ctx);
           ctx.get(listenerCtx).markdownUpdated((_ctx, markdown, _prevMarkdown) => {
             onChangeRef.current(markdown);
           });

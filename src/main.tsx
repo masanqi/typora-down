@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import 'prismjs/themes/prism-tomorrow.css';
 import './styles/default.css';
 import './styles/typora-compat.css';
 
