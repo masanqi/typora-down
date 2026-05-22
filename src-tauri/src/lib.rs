@@ -10,8 +10,10 @@ pub fn run() {
             commands::file::write_file,
             commands::file::read_dir,
             commands::file::get_recent_files,
+            commands::file::add_recent_file,
             commands::theme::list_themes,
             commands::theme::load_theme,
+            commands::theme::get_default_theme_dir,
             commands::image::save_image,
         ])
         .run(tauri::generate_context!())
