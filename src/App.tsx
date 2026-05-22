@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Editor from './components/Editor';
 import Sidebar from './components/Sidebar';
 import Toolbar from './components/Toolbar';
@@ -13,6 +13,7 @@ export default function App() {
   const theme = useTheme();
   const editor = useEditor();
   const [sidebarWidth, setSidebarWidth] = useState(200);
+  const editorContainerRef = useRef<HTMLDivElement>(null);
 
   const handleOpenFile = useCallback(async () => {
     const path = await open({
@@ -41,6 +42,17 @@ export default function App() {
       theme.setCustomThemeDir(dir);
     }
   }, [theme.setCustomThemeDir]);
+
+  const handleHeadingClick = useCallback((id: string) => {
+    // Query the editor container for heading elements with the matching data attribute
+    const container = editorContainerRef.current;
+    if (!container) return;
+
+    const headingEl = container.querySelector(`[data-heading-id="${id}"]`);
+    if (headingEl) {
+      headingEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, []);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -87,16 +99,20 @@ export default function App() {
             onFileSelect={file.openFile}
             activeFile={file.currentFile}
             headings={editor.headings}
-            onHeadingClick={() => {}}
+            onHeadingClick={handleHeadingClick}
             width={sidebarWidth}
             onWidthChange={setSidebarWidth}
           />
         )}
-        <Editor
-          value={file.content}
-          onChange={file.onContentChange}
-          sourceMode={editor.sourceMode}
-        />
+        <div ref={editorContainerRef} className="editor-area">
+          <Editor
+            value={file.content}
+            onChange={file.onContentChange}
+            sourceMode={editor.sourceMode}
+            onHeadingsChange={editor.setHeadings}
+            currentFile={file.currentFile}
+          />
+        </div>
       </div>
       <StatusBar
         lineCount={file.lineCount}

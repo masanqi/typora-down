@@ -40,6 +40,13 @@ body {
   padding: 24px 16px;
 }
 
+.editor-area {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+}
+
 .editor-content {
   max-width: var(--editor-max-width);
   width: 100%;
