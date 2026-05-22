@@ -1,0 +1,64 @@
+/* Typora selector compatibility mapping layer */
+
+#write { all: unset; display: block; }
+
+#write,
+.milkdown-editor {
+  /* Delegated to theme CSS */
+}
+
+.md-fences,
+.milkdown-code-block,
+.milkdown-editor .ProseMirror pre {
+  /* Delegated to theme CSS */
+}
+
+.md-meta,
+.milkdown-meta {
+  /* Delegated to theme CSS */
+}
+
+.md-tag,
+.milkdown-tag {
+  /* Delegated to theme CSS */
+}
+
+.md-math-block,
+.milkdown-math-block {
+  /* Delegated to theme CSS */
+}
+
+.md-diagram,
+.milkdown-diagram {
+  /* Delegated to theme CSS */
+}
+
+.md-task-list-item > input,
+.milkdown-editor .ProseMirror .task-list-item input {
+  /* Delegated to theme CSS */
+}
+
+.md-fences.md-meta-block,
+.milkdown-frontmatter {
+  /* Delegated to theme CSS */
+}
+
+.md-footnote,
+.milkdown-footnote {
+  /* Delegated to theme CSS */
+}
+
+.md-image,
+.milkdown-editor .ProseMirror img {
+  /* Delegated to theme CSS */
+}
+
+.md-link,
+.milkdown-editor .ProseMirror a {
+  /* Delegated to theme CSS */
+}
+
+.md-table,
+.milkdown-editor .ProseMirror table {
+  /* Delegated to theme CSS */
+}

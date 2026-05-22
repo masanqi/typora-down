@@ -1,0 +1,358 @@
+:root {
+  --editor-max-width: 800px;
+  --sidebar-width: 200px;
+  --icon-bar-width: 42px;
+  --toolbar-height: 36px;
+  --statusbar-height: 24px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background: #fff;
+}
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.editor-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.editor-content {
+  max-width: var(--editor-max-width);
+  width: 100%;
+}
+
+.milkdown-editor .ProseMirror {
+  outline: none;
+  min-height: 200px;
+}
+
+.milkdown-editor .ProseMirror p {
+  margin-bottom: 0.8em;
+}
+
+.milkdown-editor .ProseMirror h1 { font-size: 2em; font-weight: 700; margin: 0.8em 0 0.4em; }
+.milkdown-editor .ProseMirror h2 { font-size: 1.5em; font-weight: 700; margin: 0.8em 0 0.4em; }
+.milkdown-editor .ProseMirror h3 { font-size: 1.25em; font-weight: 600; margin: 0.6em 0 0.3em; }
+.milkdown-editor .ProseMirror h4 { font-size: 1.1em; font-weight: 600; margin: 0.5em 0 0.25em; }
+.milkdown-editor .ProseMirror h5 { font-size: 1em; font-weight: 600; margin: 0.5em 0 0.25em; }
+.milkdown-editor .ProseMirror h6 { font-size: 0.9em; font-weight: 600; margin: 0.5em 0 0.25em; }
+
+.milkdown-editor .ProseMirror blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 16px;
+  color: #666;
+  margin: 0.8em 0;
+}
+
+.milkdown-editor .ProseMirror code {
+  background: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-family: "SF Mono", Menlo, monospace;
+}
+
+.milkdown-editor .ProseMirror pre {
+  background: #f6f8fa;
+  border-radius: 6px;
+  padding: 16px;
+  overflow-x: auto;
+  margin: 0.8em 0;
+}
+
+.milkdown-editor .ProseMirror pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85em;
+}
+
+.milkdown-editor .ProseMirror img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.milkdown-editor .ProseMirror hr {
+  border: none;
+  border-top: 2px solid #e8e8e8;
+  margin: 1.5em 0;
+}
+
+.milkdown-editor .ProseMirror table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.8em 0;
+}
+
+.milkdown-editor .ProseMirror th,
+.milkdown-editor .ProseMirror td {
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.milkdown-editor .ProseMirror th {
+  background: #f6f8fa;
+  font-weight: 600;
+}
+
+/* Source mode */
+.source-mode-textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+  font-family: "SF Mono", Menlo, monospace;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 24px;
+  background: #fff;
+  color: #333;
+}
+
+/* Sidebar */
+.sidebar {
+  display: flex;
+  flex-shrink: 0;
+  position: relative;
+  user-select: none;
+}
+
+.sidebar-icon-bar {
+  width: var(--icon-bar-width);
+  background: #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+  gap: 4px;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar-icon {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.sidebar-icon.active {
+  background: #d0d0d0;
+  color: #333;
+}
+
+.sidebar-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #f5f5f5;
+  border-right: 1px solid #ddd;
+}
+
+.sidebar-tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  padding: 0 4px;
+}
+
+.sidebar-tab {
+  padding: 6px 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 11px;
+  color: #aaa;
+}
+
+.sidebar-tab.active {
+  color: #333;
+  border-bottom: 2px solid #333;
+  font-weight: 600;
+}
+
+.sidebar-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+/* File Tree */
+.file-tree-row {
+  display: flex;
+  align-items: center;
+  padding: 3px 4px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #555;
+}
+
+.file-tree-row:hover {
+  background: #e8e8e8;
+}
+
+.file-tree-row.active {
+  background: #d0e0f0;
+}
+
+.file-tree-icon {
+  width: 16px;
+  font-size: 10px;
+  color: #999;
+}
+
+.file-tree-children {
+  padding-left: 12px;
+}
+
+/* Outline */
+.outline-item {
+  padding: 3px 8px;
+  font-size: 12px;
+  color: #555;
+  cursor: pointer;
+  border-radius: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.outline-item:hover {
+  background: #e8e8e8;
+}
+
+.outline-empty {
+  padding: 8px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* Resizer */
+.sidebar-resizer {
+  position: absolute;
+  right: -3px;
+  top: 0;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 10;
+}
+
+.sidebar-resizer.active {
+  background: rgba(0, 100, 200, 0.2);
+}
+
+/* Toolbar */
+.toolbar {
+  height: var(--toolbar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  background: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+  gap: 8px;
+}
+
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.toolbar-group:last-child {
+  margin-left: auto;
+}
+
+.toolbar-btn {
+  padding: 4px 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.toolbar-btn:hover {
+  background: #e8e8e8;
+}
+
+.toolbar-btn.active {
+  background: #d0e0f0;
+  border-color: #a0b0c0;
+}
+
+.toolbar-select {
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 12px;
+  background: #fff;
+}
+
+/* StatusBar */
+.statusbar {
+  height: var(--statusbar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background: #f0f0f0;
+  border-top: 1px solid #ddd;
+  font-size: 11px;
+  color: #888;
+  gap: 16px;
+}
+
+/* Mermaid */
+.mermaid-output {
+  text-align: center;
+  padding: 16px 0;
+}
+
+.mermaid-output svg {
+  max-width: 100%;
+}
+
+/* Footnotes */
+.footnote-ref {
+  color: #0066cc;
+  cursor: pointer;
+  font-size: 0.8em;
+  vertical-align: super;
+}
+
+.footnote-def {
+  font-size: 0.9em;
+  color: #555;
+  border-top: 1px solid #ddd;
+  padding-top: 8px;
+  margin-top: 16px;
+}
