@@ -1,10 +1,10 @@
-import { useState, useCallback, useRef } from 'react';
-import { readFile, writeFile, readDir, addRecentFile } from '../services/ipc';
-import type { DirEntry } from '../services/ipc';
+import { useState, useCallback, useRef } from "react";
+import { readFile, writeFile, readDir, addRecentFile } from "../services/ipc";
+import type { DirEntry } from "../services/ipc";
 
 export function useFile() {
   const [currentFile, setCurrentFile] = useState<string | null>(null);
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const [dirEntries, setDirEntries] = useState<DirEntry[]>([]);
   const [rootDir, setRootDir] = useState<string | null>(null);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -23,6 +23,11 @@ export function useFile() {
   }, []);
 
   const openDir = useCallback(async (path: string) => {
+    if (!path) {
+      setDirEntries([]);
+      setRootDir(null);
+      return;
+    }
     const entries = await readDir(path);
     setDirEntries(entries);
     setRootDir(path);
@@ -49,7 +54,7 @@ export function useFile() {
     }, 300);
   }, []);
 
-  const lineCount = content.split('\n').length;
+  const lineCount = content.split("\n").length;
   const wordCount = content.trim() ? content.trim().split(/\s+/).length : 0;
 
   return {
